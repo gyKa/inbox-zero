@@ -4,6 +4,7 @@
         "monolog/monolog": "^1.23"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "phpmd/phpmd": "^2.6"
     }
 }
