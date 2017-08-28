@@ -1,0 +1,5 @@
+.env
+composer.lock
+inbox-zero.log
+
+vendor/
