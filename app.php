@@ -26,17 +26,17 @@ if ($inbox === false) {
     return;
 }
 
-$emails = imap_search($inbox,'ALL');
+$emails = imap_search($inbox, 'ALL');
 
 $log->addInfo(
     sprintf('found %s emails', count($emails))
 );
 
-if($emails) {
+if ($emails) {
     rsort($emails); // put the newest emails on top
 
     foreach ($emails as $email_number) {
-        $overview = imap_fetch_overview($inbox, $email_number,0);
+        $overview = imap_fetch_overview($inbox, $email_number, 0);
 
         $log->addDebug(
             sprintf('status - %s', $overview[0]->seen ? 'read' : 'unread'),
