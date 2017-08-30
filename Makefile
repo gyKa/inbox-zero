@@ -1,5 +1,5 @@
 phpcs:
-	vendor/bin/phpcs --standard=PSR2 app.php
+	vendor/bin/phpcs --standard=PSR2 src/
 
 phpmd:
-	vendor/bin/phpmd app.php text codesize,unusedcode,naming
+	vendor/bin/phpmd src/ text codesize,unusedcode,naming

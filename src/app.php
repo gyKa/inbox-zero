@@ -4,13 +4,13 @@ use Dotenv\Dotenv;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 $log = new Logger('APP');
 $log->pushHandler(new StreamHandler('inbox-zero.log', Logger::WARNING));
 $log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
 
-$environment = new Dotenv(__DIR__);
+$environment = new Dotenv(dirname(__DIR__));
 $environment->load();
 $environment->required(['USERNAME', 'PASSWORD'])->notEmpty();
 
@@ -18,7 +18,7 @@ $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
 $username = getenv('USERNAME');
 $password = getenv('PASSWORD');
 
-$inbox = imap_open($hostname, $username.'s', $password);
+$inbox = imap_open($hostname, $username, $password);
 
 if ($inbox === false) {
     $log->addError('cannot connect to gmail', [imap_last_error()]);
