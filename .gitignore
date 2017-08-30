@@ -1,5 +1,5 @@
 .env
 composer.lock
-inbox-zero.log
+logs.txt
 
 vendor/

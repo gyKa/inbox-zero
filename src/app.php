@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(0);
+
 use Dotenv\Dotenv;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -7,7 +9,7 @@ use Monolog\Logger;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 $log = new Logger('APP');
-$log->pushHandler(new StreamHandler('inbox-zero.log', Logger::WARNING));
+$log->pushHandler(new StreamHandler(dirname(__DIR__) . '/logs.txt', Logger::WARNING));
 $log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
 
 $environment = new Dotenv(dirname(__DIR__));
