@@ -9,7 +9,16 @@ use Monolog\Logger;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 $log = new Logger('APP');
-$log->pushHandler(new StreamHandler(dirname(__DIR__) . '/logs.txt', Logger::WARNING));
+$log->pushHandler(
+    new StreamHandler(
+        join(DIRECTORY_SEPARATOR,[dirname(__DIR__), 'log', 'warning.log']),
+        Logger::WARNING)
+);
+$log->pushHandler(
+    new StreamHandler(
+        join(DIRECTORY_SEPARATOR,[dirname(__DIR__), 'log', 'info.log']),
+        Logger::INFO)
+);
 $log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
 
 $environment = new Dotenv(dirname(__DIR__));
@@ -37,6 +46,11 @@ $log->addInfo(
 if ($emails) {
     rsort($emails); // put the newest emails on top
 
+    $emailsForDeletion = [];
+
+    $nowDate = new DateTime();
+    $emailDate = new DateTime();
+
     foreach ($emails as $email_number) {
         $overview = imap_fetch_overview($inbox, $email_number, 0);
 
@@ -57,6 +71,28 @@ if ($emails) {
 
         $log->addDebug(
             sprintf('udate - %s', $overview[0]->udate),
+            [$email_number]
+        );
+
+        $emailDate->setTimestamp($overview[0]->udate);
+        $difference = $emailDate->diff($nowDate);
+        $differenceInDays = (int)$difference->format('%a');
+
+        if ($overview[0]->seen && $differenceInDays > 14) {
+            $log->addDebug(
+                sprintf('diff - %s days', $differenceInDays),
+                [$email_number]
+            );
+
+            $emailsForDeletion[] = $email_number;
+        }
+    }
+
+    foreach ($emailsForDeletion as $email_number) {
+        $overview = imap_fetch_overview($inbox, $email_number, 0);
+
+        $log->addInfo(
+            sprintf('preparing for deletion an email from %s and having date %s', $overview[0]->from, $overview[0]->date),
             [$email_number]
         );
     }
