@@ -11,13 +11,15 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 $log = new Logger('APP');
 $log->pushHandler(
     new StreamHandler(
-        join(DIRECTORY_SEPARATOR,[dirname(__DIR__), 'log', 'warning.log']),
-        Logger::WARNING)
+        join(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'log', 'warning.log']),
+        Logger::WARNING
+    )
 );
 $log->pushHandler(
     new StreamHandler(
-        join(DIRECTORY_SEPARATOR,[dirname(__DIR__), 'log', 'info.log']),
-        Logger::INFO)
+        join(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'log', 'info.log']),
+        Logger::INFO
+    )
 );
 $log->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
 
@@ -92,7 +94,11 @@ if ($emails) {
         $overview = imap_fetch_overview($inbox, $email_number, 0);
 
         $log->addInfo(
-            sprintf('preparing for deletion an email from %s and having date %s', $overview[0]->from, $overview[0]->date),
+            sprintf(
+                'preparing for deletion an email from %s and having date %s',
+                $overview[0]->from,
+                $overview[0]->date
+            ),
             [$email_number]
         );
     }
