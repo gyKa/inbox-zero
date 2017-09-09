@@ -6,7 +6,7 @@ dev-install:
 	composer install --prefer-dist
 	cp .env.example .env
 
-phpqa: parallel-lint phpcs phpmd
+phpqa: parallel-lint phpcs phpmd phpcpd
 
 parallel-lint:
 	vendor/bin/parallel-lint -e php src/
@@ -16,3 +16,6 @@ phpcs:
 
 phpmd:
 	vendor/bin/phpmd src/ text codesize,unusedcode,naming
+
+phpcpd:
+	vendor/bin/phpcpd src/
