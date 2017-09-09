@@ -6,6 +6,11 @@ dev-install:
 	composer install --prefer-dist
 	cp .env.example .env
 
+phpqa: parallel-lint phpcs phpmd
+
+parallel-lint:
+	vendor/bin/parallel-lint src/
+
 phpcs:
 	vendor/bin/phpcs --standard=PSR2 src/
 
