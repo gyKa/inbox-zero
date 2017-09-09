@@ -9,7 +9,7 @@ dev-install:
 phpqa: parallel-lint phpcs phpmd
 
 parallel-lint:
-	vendor/bin/parallel-lint src/
+	vendor/bin/parallel-lint -e php src/
 
 phpcs:
 	vendor/bin/phpcs --standard=PSR2 src/
