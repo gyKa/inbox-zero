@@ -5,7 +5,8 @@ dev-install: environment
 	composer install --prefer-dist
 
 environment:
-	cp .env.example .env
+	# copy environment file if the given path exists and is a regular file
+	[ -f .env ] || cp .env.example .env
 
 qa: parallel-lint phpcs phpmd phpcpd
 
