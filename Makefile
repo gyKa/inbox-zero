@@ -7,7 +7,7 @@ dev-install: environment
 environment:
 	cp .env.example .env
 
-phpqa: parallel-lint phpcs phpmd phpcpd
+qa: parallel-lint phpcs phpmd phpcpd
 
 parallel-lint:
 	vendor/bin/parallel-lint -e php src/
