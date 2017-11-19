@@ -1,9 +1,10 @@
-install:
+install: environment
 	composer install --prefer-dist --no-dev
-	cp .env.example .env
 
-dev-install:
+dev-install: environment
 	composer install --prefer-dist
+
+environment:
 	cp .env.example .env
 
 phpqa: parallel-lint phpcs phpmd phpcpd
